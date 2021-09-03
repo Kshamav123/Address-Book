@@ -1,7 +1,6 @@
 package com.AddressBook;
 
-public class AddressBookMain {
-	
+public class Contacts {
 	public String firstName;
 	public String lastName;
 	public String address;
@@ -12,7 +11,7 @@ public class AddressBookMain {
 	public String email;
 	
 	
-	public AddressBookMain(String firstName, String lastName, String address, String city, String state, int zip, int phoneNo, String email)
+	public Contacts(String firstName, String lastName, String address, String city, String state, int zip, int phoneNo, String email)
 	{
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -29,4 +28,6 @@ public class AddressBookMain {
         	System.out.println("Welcome to Address Book Program");
         }
 }
+
+
 
