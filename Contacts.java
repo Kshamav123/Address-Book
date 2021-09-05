@@ -6,12 +6,12 @@ public class Contacts {
 	public String address;
 	public String city;
 	public String state;
-	public int zip;
-	public int phoneNo;
+	public String zip;
+	public String phoneNo;
 	public String email;
 	
 	
-	public Contacts(String firstName, String lastName, String address, String city, String state, int zip, int phoneNo, String email)
+	public Contacts(String firstName, String lastName, String address, String city, String state, String zip, String phoneNo, String email)
 	{
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -22,12 +22,16 @@ public class Contacts {
 		this.phoneNo = phoneNo;
 		this.email = email;
 	}
-	
-        public static void main (String[] args)
-        {
-        	System.out.println("Welcome to Address Book Program");
-        }
+
+
+	@Override
+	public String toString() {
+		return "Contacts [firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", city=" + city
+				+ ", state=" + state + ", zip=" + zip + ", phoneNo=" + phoneNo + ", email=" + email + "]";
+	}
 }
 
+
+	
 
 
