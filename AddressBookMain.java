@@ -59,7 +59,7 @@ public class AddressBookMain {
 	/**
 	 * To add new contact
 	 */
-	private static void addContact() {
+	public static void addContact() {
 		Contacts contact;
 
 		System.out.println("Enter the person details");
@@ -77,10 +77,10 @@ public class AddressBookMain {
 		System.out.println("enter the zip code");
 		String zip = sc.nextLine();
 		System.out.println("enter the phone Number");
-		String phone = sc.nextLine();
+		String phoneNo = sc.nextLine();
 		System.out.println("enter the email Id ");
 		String email = sc.nextLine();
-		contact = new Contacts(firstName1, lastName1, address, city, state, zip, phone, email);
+		contact = new Contacts(firstName1, lastName1, address, city, state, zip, phoneNo, email);
 		list.add(contact);
 
 	}
@@ -101,7 +101,7 @@ public class AddressBookMain {
 	/**
 	 * To edit a person contact details
 	 */
-	private static void editPerson(String firstName1, String lastName1) {
+	public static void editPerson(String firstName1, String lastName1) {
 
 		Contacts person = getPerson(firstName1, lastName1);
 		if (person != null) {
@@ -148,8 +148,8 @@ public class AddressBookMain {
 					break;
 				case 7:
 					System.out.println("enter phone number");
-					String phone = sc.nextLine();
-					person.phoneNo = phone;
+					String phoneNo = sc.nextLine();
+					person.phoneNo = phoneNo;
 					break;
 				case 8:
 					System.out.println("enter email");
@@ -172,7 +172,7 @@ public class AddressBookMain {
 	 * Deletes the contact of person using persons first name as firstName1 and last
 	 * name as lastName1
 	 */
-	private static void deleteperson(String firstName1, String lastName1) {
+	public static void deleteperson(String firstName1, String lastName1) {
 
 		Contacts person = getPerson(firstName1, lastName1);
 		if (person != null) {
