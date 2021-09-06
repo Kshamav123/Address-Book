@@ -177,6 +177,7 @@ public class AddressBookMain {
 		Contacts person = getPerson(firstName1, lastName1);
 		if (person != null) {
 			list.remove(person);
+			System.out.println("Contact deleted");
 		} else {
 			
 			System.out.println("Contact not found");
