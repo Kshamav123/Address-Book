@@ -1,35 +1,34 @@
 package com.AddressBook;
 
+import java.util.Objects;
+
 public class Contacts {
-	public String firstName;
-	public String lastName;
-	public String address;
-	public String city;
-	public String state;
-	public String zip;
-	public String phoneNo;
-	public String email;
-	
-	
-	public Contacts(String firstName, String lastName, String address, String city, String state, String zip, String phoneNo, String email)
-	{
+	public String firstName, lastName, address, city, state, zip, phoneNumber, eMail;
+
+	Contacts(String firstName, String lastName, String address, String city, String state, String zip,
+			String phoneNumber, String eMail) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
 		this.city = city;
 		this.state = state;
+		this.phoneNumber = phoneNumber;
 		this.zip = zip;
-		this.phoneNo = phoneNo;
-		this.email = email;
-	}
+		this.eMail = eMail;
 
+	}
 
 	@Override
 	public String toString() {
-		return "Contacts [firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", city=" + city
-				+ ", state=" + state + ", zip=" + zip + ", phoneNo=" + phoneNo + ", email=" + email + "]";
+		return "Contact [firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", city=" + city
+				+ ", state=" + state + ", zip=" + zip + ", phoneNumber=" + phoneNumber + ", eMail=" + eMail + "]";
 	}
+
+	
+
+	
 }
+
 
 
 	
