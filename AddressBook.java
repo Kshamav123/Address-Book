@@ -26,11 +26,10 @@ public class AddressBook {
 		Contacts contact;
 
 		System.out.println("Enter the person details");
-	//	Scanner sc = new Scanner(System.in);
 		System.out.println("enter the first name");
-		String fname = sc.nextLine();
+		String firstname1 = sc.nextLine();
 		System.out.println("enter the last name");
-		String lname = sc.nextLine();
+		String lastname1= sc.nextLine();
 		System.out.println("enter the addres");
 		String address = sc.nextLine();
 		System.out.println("enter the city");
@@ -44,15 +43,14 @@ public class AddressBook {
 		String phone = sc.nextLine();
 		System.out.println("enter the email Id ");
 		String email = sc.nextLine();
-		contact = new Contacts(fname, lname, address, city, state, zip, phone, email);
-		//addressBook.addContact(contact);
-		String name=fname + " "+lname;
-		Contacts c= addressBook.get(name);
-		if(c != null) {
+		contact = new Contacts(firstname1, lastname1, address, city, state, zip, phone, email);
+		String name=firstname1 + " "+lastname1;
+		Contacts con= addressBook.get(name);
+		if(con != null) {
 			System.out.println("There is already a person with this name ");
 		}
 		else {
-		addressBook.put(fname+" "+lname, contact);
+		addressBook.put(firstname1+" "+lastname1, contact);
 		}
 
 	}
@@ -61,71 +59,71 @@ public class AddressBook {
 	
 	public static void editPerson() {
 		
-		//Scanner sc = new Scanner(System.in);
+		
 		
 		System.out.println("enter the first name");
-		String fname = sc.nextLine();
+		String firstname1 = sc.nextLine();
 		System.out.println("enter the last name");
-		String lname = sc.nextLine();
+		String lastname1 = sc.nextLine();
 		
-		String name=fname + " "+lname;
+		String name=firstname1 + " "+lastname1;
 		
-		Contacts c= addressBook.get(name);
-		if(c == null) {
-			System.out.println("Person of that name not exits in this book");
+		Contacts con= addressBook.get(name);
+		if(con == null) {
+			System.out.println("Person of that name does not exits in this book");
 		}
 		else {
-			int choice;
+			int option;
 
-			Scanner r = new Scanner(System.in);
+			Scanner scanner= new Scanner(System.in);
 			
 
 			while (true) {
 				System.out.println("What do you wanna edit");
 				System.out.println(
-						"1 First Name\n2 Last Name\n3 Address\n4 City\n5 State\n6Zip\n7 Phone number\n8Email\n9Go back");
-				choice = r.nextInt();
-				switch (choice) {
+						"1 First Name\n2 Last Name\n3 Address\n4 City\n5 State\n6 Zip\n7 Phone number\n8 Email\n9 Go back");
+				option = scanner.nextInt();
+				switch (option) {
 				case 1:
 					System.out.println("enter the first name");
 					String firstName = sc.nextLine();
 					
-					c.firstName=firstName;
+					con.firstName=firstName;
 					break;
 				case 2:
 					System.out.println("enter the last name");
 					String lastName = sc.nextLine();
-					c.lastName = lastName;
+					con.lastName = lastName;
 					break;
 				case 3:
 					System.out.println("enter the address");
 					String address = sc.nextLine();
-					c.address = address;
+					con.address = address;
 					break;
 				case 4:
 					System.out.println("enter the city");
 					String city = sc.nextLine();
-					c.city = city;
+					con.city = city;
 					break;
 				case 5:
 					System.out.println("enter state");
 					String state = sc.nextLine();
-					c.state = state;
+					con.state = state;
 					break;
 				case 6:
 					System.out.println("enter the zip code");
 					String zip = sc.nextLine();
-					c.zip = zip;
+					con.zip = zip;
 					break;
 				case 7:
 					System.out.println("enter phone number");
 					String phone = sc.nextLine();
-					c.phoneNumber = phone;
+					con.phoneNumber = phone;
 					break;
 				case 8:
 					System.out.println("enter email");
 					String email = sc.nextLine();
-					c.eMail = email;
+					con.eMail = email;
 					break;
 				case 9:
 					return;
@@ -140,14 +138,14 @@ public class AddressBook {
 		
 	
 		System.out.println("enter the first name");
-		String fname = sc.nextLine();
+		String firstname1 = sc.nextLine();
 		System.out.println("enter the last name");
-		String lname = sc.nextLine();
+		String lastname1 = sc.nextLine();
 		
-		String name=fname + " "+lname;
+		String name=firstname1 + " "+lastname1;
 		
-		Contacts c= addressBook.get(name);
-		if(c == null) {
+		Contacts con= addressBook.get(name);
+		if(con == null) {
 			System.out.println("Person of that name not exits in this book");
 			
 		}
@@ -161,8 +159,8 @@ public class AddressBook {
 	
 	public void print() {
 
-		for(Contacts c:addressBook.values()) {
-			System.out.println(c);
+		for(Contacts con:addressBook.values()) {
+			System.out.println(con);
 		}
 		
 	}	
