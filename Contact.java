@@ -2,10 +2,10 @@ package com.AddressBook;
 
 import java.util.Objects;
 
-public class Contacts {
+public class Contact {
 	public String firstName, lastName, address, city, state, zip, phoneNumber, eMail;
 
-	Contacts(String firstName, String lastName, String address, String city, String state, String zip,
+	Contact(String firstName, String lastName, String address, String city, String state, String zip,
 			String phoneNumber, String eMail) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -24,9 +24,23 @@ public class Contacts {
 				+ ", state=" + state + ", zip=" + zip + ", phoneNumber=" + phoneNumber + ", eMail=" + eMail + "]";
 	}
 
-	
+	@Override
+	public int hashCode() {
+		return Objects.hash(firstName, lastName);
+	}
 
-	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Contact other = (Contact) obj;
+		return Objects.equals(firstName, other.firstName) && Objects.equals(lastName, other.lastName);
+	}
+
 }
 
 
