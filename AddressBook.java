@@ -73,7 +73,6 @@ public class AddressBook {
 		String email = sc.nextLine();
 		contact = new Contact(fname, lname, address, city, state, zip, phone, email);
 		String name = fname + " " + lname;
-		
 		Set<String> keyset = contacts.keySet();
 		Supplier<Stream<String>> streamSupplier = () -> keyset.stream();
 		Optional<String> result1 = streamSupplier.get().findAny();
@@ -117,6 +116,7 @@ public class AddressBook {
 				case 1:
 					System.out.println("enter the first name");
 					String firstName = sc.nextLine();
+					// person.firstName = firstName;
 					c.firstName = firstName;
 					break;
 				case 2:
@@ -189,7 +189,7 @@ public class AddressBook {
 
 	}
 
-	public void search(String place) {
+	public int search(String place) {
 
 		Map<String, Contact> statesMap = new HashMap<>();
 		Map<String, Contact> cityMap = new HashMap<>();
@@ -214,12 +214,14 @@ public class AddressBook {
 			return false;
 		});
 
-		for (Map.Entry<String, Contact> entry : statesMap.entrySet())
-			System.out.println(entry.getValue());
+		for (Map.Entry<String, Contact> entry : statesMap.entrySet()) {
 
+			System.out.println(entry.getValue());
+		}
 		for (Map.Entry<String, Contact> entry : cityMap.entrySet())
 			System.out.println(entry.getValue());
 
-	}
+		return statesMap.size() + cityMap.size();
 
+	}
 }
