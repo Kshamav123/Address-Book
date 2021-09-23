@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class AddressBookMain {
-	
 	static Map<String, AddressBook> addressBook = new HashMap<>();
 	static Scanner r = new Scanner(System.in);
 
@@ -61,15 +60,17 @@ public class AddressBookMain {
 	private static void searchPlace() {
 		System.out.println("Enter the city or state name");
 		String place = r.nextLine();
+		int count=0;
 		for (Map.Entry<String, AddressBook> entry : addressBook.entrySet()) {
 			AddressBook obj = entry.getValue();
-			obj.search(place);
+			count+=obj.search(place);
 		}
+		System.out.println(count+" contact found based on place of your choice");
 
 	}
 
 	private static void deleteContact() {
-		System.out.println("Enter the name of address book from which you want to delete");
+		System.out.println("Enter the name of address book from which you wanna delete");
 
 		String bookName = r.nextLine();
 		AddressBook adBook = addressBook.get(bookName);
@@ -83,7 +84,7 @@ public class AddressBookMain {
 	}
 
 	private static void editContact() {
-		System.out.println("Enter the name of address book to which you want to edit");
+		System.out.println("Enter the name of address book to which you wanna edit");
 
 		String bookName = r.nextLine();
 		AddressBook adBook = addressBook.get(bookName);
@@ -112,7 +113,7 @@ public class AddressBookMain {
 	}
 
 	private static void displayContact() {
-		System.out.println("Enter the name of address book whose contacts you want to display");
+		System.out.println("Enter the name of address book whose contacts you wanna display");
 
 		String bookName = r.nextLine();
 		AddressBook adBook = addressBook.get(bookName);
@@ -127,7 +128,7 @@ public class AddressBookMain {
 
 	private static void addContact() {
 
-		System.out.println("Enter the name of Address book to which you want to add the contact");
+		System.out.println("Enter the name of Address book to which you wanna a add the contact");
 		String adBook = r.nextLine();
 		AddressBook Book = addressBook.get(adBook);
 		if (Book == null) {
@@ -138,5 +139,4 @@ public class AddressBookMain {
 		}
 
 	}
-
 }
