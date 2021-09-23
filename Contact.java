@@ -40,7 +40,6 @@ public class Contact {
 		Contact other = (Contact) obj;
 		return Objects.equals(firstName, other.firstName) && Objects.equals(lastName, other.lastName);
 	}
-
 }
 
 
