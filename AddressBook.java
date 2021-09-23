@@ -1,5 +1,6 @@
 package com.AddressBook;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -72,6 +73,7 @@ public class AddressBook {
 		String email = sc.nextLine();
 		contact = new Contact(fname, lname, address, city, state, zip, phone, email);
 		String name = fname + " " + lname;
+	
 		Set<String> keyset = contacts.keySet();
 		Supplier<Stream<String>> streamSupplier = () -> keyset.stream();
 		Optional<String> result1 = streamSupplier.get().findAny();
@@ -86,6 +88,7 @@ public class AddressBook {
 				contacts.put(fname + " " + lname, contact);
 			}
 		}
+
 	}
 
 	public void editPerson() {
@@ -185,5 +188,25 @@ public class AddressBook {
 			System.out.println(entry.getValue());
 
 	}
+
+	public void search(String place) {
+		Set<Map.Entry<String, Contact>> entries = contacts.entrySet();
+		Stream<Map.Entry<String, Contact>> entriesStream = entries.stream();
+
+		Set<String> keySet = contacts.keySet();
+		Collection<Contact> values = contacts.values();
+
+		Stream<Contact> valuesStream = values.stream();
+		Stream<String> keysStream = keySet.stream();
+
+		valuesStream.anyMatch((x) -> {
+			if (x.city.equals(place) || x.state.equals(place)) {
+				System.out.println(x);
+				return true;
+			} else {
+				return false;
+			}
+		});
+
+	}
 }
-	

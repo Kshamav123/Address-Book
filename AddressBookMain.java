@@ -21,7 +21,7 @@ public class AddressBookMain {
 		while (choice != EXIT) {
 
 			System.out.println(
-					"1 : Add AddressBook\n2 : Add Contact\n3 : Edit Contact\n4 : Delete Contact\n5 : Display Contact\n"
+					"1 : Add AddressBook\n2 : Add Contact\n3 : Edit Contact\n4 : Delete Contact\n5 : Display Contact\n6 : Search by place\n"
 							+ EXIT + " : to exit");
 			Scanner r = new Scanner(System.in);
 			Scanner sc = new Scanner(System.in);
@@ -45,6 +45,9 @@ public class AddressBookMain {
 			case 5:
 				displayContact();
 				break;
+			case 6:
+				searchPlace();
+				break;
 
 			case EXIT:
 				System.exit(0);
@@ -55,10 +58,19 @@ public class AddressBookMain {
 
 	}
 
-	private static void deleteContact() {
-		System.out.println("Enter the name of address book from which you wanna delete");
+	private static void searchPlace() {
+		System.out.println("Enter the city or state name");
+		String place = r.nextLine();
+		for (Map.Entry<String, AddressBook> entry : addressBook.entrySet()) {
+			AddressBook obj = entry.getValue();
+			obj.search(place);
+		}
 
-		// Scanner r =new Scanner(System.in);
+	}
+
+	private static void deleteContact() {
+		System.out.println("Enter the name of address book from which you want to delete");
+
 		String bookName = r.nextLine();
 		AddressBook adBook = addressBook.get(bookName);
 		if (adBook != null) {
@@ -71,9 +83,8 @@ public class AddressBookMain {
 	}
 
 	private static void editContact() {
-		System.out.println("Enter the name of address book to which you wanna edit");
+		System.out.println("Enter the name of address book to which you want to edit");
 
-		// Scanner r =new Scanner(System.in);
 		String bookName = r.nextLine();
 		AddressBook adBook = addressBook.get(bookName);
 		if (adBook != null) {
@@ -87,7 +98,6 @@ public class AddressBookMain {
 	private static void addAddressBook() {
 		System.out.println("Enter the name of new address book");
 
-		// Scanner r =new Scanner(System.in);
 		String bookName = r.nextLine();
 
 		AddressBook book = addressBook.get(bookName);
@@ -102,13 +112,11 @@ public class AddressBookMain {
 	}
 
 	private static void displayContact() {
-		System.out.println("Enter the name of address book whose contacts you wanna display");
+		System.out.println("Enter the name of address book whose contacts you want to display");
 
-		// Scanner r =new Scanner(System.in);
 		String bookName = r.nextLine();
 		AddressBook adBook = addressBook.get(bookName);
 
-		// System.out.println(adBook);
 		if (adBook != null) {
 			adBook.print();
 		} else {
@@ -119,8 +127,7 @@ public class AddressBookMain {
 
 	private static void addContact() {
 
-		System.out.println("Enter the name of Address book to which you wanna a add the contact");
-		// Scanner r =new Scanner(System.in);
+		System.out.println("Enter the name of Address book to which you want to add the contact");
 		String adBook = r.nextLine();
 		AddressBook Book = addressBook.get(adBook);
 		if (Book == null) {
@@ -131,4 +138,5 @@ public class AddressBookMain {
 		}
 
 	}
+
 }
