@@ -1,6 +1,7 @@
 package com.AddressBook;
 
 import java.util.Collection;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -74,6 +75,7 @@ public class AddressBook {
 		String email = sc.nextLine();
 		contact = new Contact(fname, lname, address, city, state, zip, phone, email);
 		String name = fname + " " + lname;
+	
 		Set<String> keyset = contacts.keySet();
 		Supplier<Stream<String>> streamSupplier = () -> keyset.stream();
 		Optional<String> result1 = streamSupplier.get().findAny();
@@ -111,12 +113,13 @@ public class AddressBook {
 			while (true) {
 				System.out.println("What do you wanna edit");
 				System.out.println(
-						"1 First Name\n2 Last Name\n3 Address\n4 City\n5 State\n6 Zip\n7 Phone number\n8 Email\n9 Go back");
+						"1 First Name\n2 Last Name\n3 Address\n4 City\n5 State\n6Zip\n7 Phone number\n8Email\n9Go back");
 				choice = r.nextInt();
 				switch (choice) {
 				case 1:
 					System.out.println("enter the first name");
 					String firstName = sc.nextLine();
+					// person.firstName = firstName;
 					c.firstName = firstName;
 					break;
 				case 2:
@@ -257,7 +260,46 @@ public class AddressBook {
 
 			System.out.println(entry.getValue());
 		}
-
 	}
+
+	public void sortZip() {
+		Set<Map.Entry<String, Contact>> entries = contacts.entrySet();
+		Stream<Map.Entry<String, Contact>> entriesStream = entries.stream();
+
+		Set<String> keySet = contacts.keySet();
+		Collection<Contact> values = contacts.values();
+
+		Stream<Contact> valuesStream = values.stream();
+		Stream<String> keysStream = keySet.stream();
+
+		valuesStream.sorted((p1, p2) -> p1.zip.compareTo(p2.zip)).forEach(System.out::println);
+	}
+
+	public void sortCity() {
+		Set<Map.Entry<String, Contact>> entries = contacts.entrySet();
+		Stream<Map.Entry<String, Contact>> entriesStream = entries.stream();
+
+		Set<String> keySet = contacts.keySet();
+		Collection<Contact> values = contacts.values();
+
+		Stream<Contact> valuesStream = values.stream();
+		Stream<String> keysStream = keySet.stream();
+
+		valuesStream.sorted((p1, p2) -> p1.city.compareTo(p2.city)).forEach(System.out::println);
+	}
+
+	public void sortState() {
+		Set<Map.Entry<String, Contact>> entries = contacts.entrySet();
+		Stream<Map.Entry<String, Contact>> entriesStream = entries.stream();
+
+		Set<String> keySet = contacts.keySet();
+		Collection<Contact> values = contacts.values();
+
+		Stream<Contact> valuesStream = values.stream();
+		Stream<String> keysStream = keySet.stream();
+
+		valuesStream.sorted((p1, p2) -> p1.state.compareTo(p2.state)).forEach(System.out::println);
+	}
+
 
 }
