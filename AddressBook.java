@@ -14,6 +14,10 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class AddressBook {
@@ -52,6 +56,9 @@ public class AddressBook {
 		this.addressBookName = addressBookName;
 	}
 
+	/**
+	 * Adds the contacts to addressbook uses stream
+	 */
 	public void addContact() {
 		Contact contact;
 
@@ -75,7 +82,7 @@ public class AddressBook {
 		String email = sc.nextLine();
 		contact = new Contact(fname, lname, address, city, state, zip, phone, email);
 		String name = fname + " " + lname;
-	
+
 		Set<String> keyset = contacts.keySet();
 		Supplier<Stream<String>> streamSupplier = () -> keyset.stream();
 		Optional<String> result1 = streamSupplier.get().findAny();
@@ -93,6 +100,9 @@ public class AddressBook {
 
 	}
 
+	/**
+	 * Edits the details of person in contact
+	 */
 	public void editPerson() {
 
 		System.out.println("enter the first name");
@@ -166,6 +176,9 @@ public class AddressBook {
 
 	}
 
+	/**
+	 * Deletes the person in contact
+	 */
 	public void deleteperson() {
 
 		System.out.println("enter the first name");
@@ -185,6 +198,9 @@ public class AddressBook {
 
 	}
 
+	/**
+	 * Prints the contacts
+	 */
 	public void print() {
 
 		for (Map.Entry<String, Contact> entry : contacts.entrySet())
@@ -192,6 +208,10 @@ public class AddressBook {
 
 	}
 
+	/**
+	 * @param to search the place entered
+	 * @return the number of contacts
+	 */
 	public int searchCity(String place) {
 
 		Map<String, Contact> cityMap = new HashMap<>();
@@ -220,6 +240,10 @@ public class AddressBook {
 
 	}
 
+	/**
+	 * @param to search the place entered
+	 * @return the number of contacts 
+	 */
 	public int searchState(String place) {
 
 		Map<String, Contact> statesMap = new HashMap<>();
@@ -250,6 +274,9 @@ public class AddressBook {
 
 	}
 
+	/**
+	 * Sorts the contact based on name
+	 */
 	public void sort() {
 
 		Map<String, Contact> sortedContact = contacts.entrySet().stream().sorted(Map.Entry.comparingByKey())
@@ -260,8 +287,12 @@ public class AddressBook {
 
 			System.out.println(entry.getValue());
 		}
+		System.out.println();
 	}
 
+	/**
+	 * Sorts the contact based on zipcode
+	 */
 	public void sortZip() {
 		Set<Map.Entry<String, Contact>> entries = contacts.entrySet();
 		Stream<Map.Entry<String, Contact>> entriesStream = entries.stream();
@@ -273,8 +304,12 @@ public class AddressBook {
 		Stream<String> keysStream = keySet.stream();
 
 		valuesStream.sorted((p1, p2) -> p1.zip.compareTo(p2.zip)).forEach(System.out::println);
+		System.out.println();
 	}
 
+	/**
+	 * Sorts the contact based on city
+	 */
 	public void sortCity() {
 		Set<Map.Entry<String, Contact>> entries = contacts.entrySet();
 		Stream<Map.Entry<String, Contact>> entriesStream = entries.stream();
@@ -286,8 +321,12 @@ public class AddressBook {
 		Stream<String> keysStream = keySet.stream();
 
 		valuesStream.sorted((p1, p2) -> p1.city.compareTo(p2.city)).forEach(System.out::println);
+		System.out.println();
 	}
 
+	/**
+	 * Sorts the contacts based on state
+	 */
 	public void sortState() {
 		Set<Map.Entry<String, Contact>> entries = contacts.entrySet();
 		Stream<Map.Entry<String, Contact>> entriesStream = entries.stream();
@@ -299,7 +338,50 @@ public class AddressBook {
 		Stream<String> keysStream = keySet.stream();
 
 		valuesStream.sorted((p1, p2) -> p1.state.compareTo(p2.state)).forEach(System.out::println);
+		System.out.println();
 	}
 
+	/**
+	 * Adds the contacts stored in a file to contacts
+	 */
+	public void addContactFile(BufferedReader br) {
+		Contact contact;
+		String line;
 
+		try {
+			while ((line = br.readLine()) != null) {
+				String[] data = line.split(",");
+				contact = new Contact(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]);
+				String name = data[0] + " " + data[1];
+				Contact c = contacts.get(name);
+
+				if (c == null) {
+					contacts.put(name, contact);
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * writes the contacts in addressbook to file
+	 */
+	public void writeContact(String fileName) {
+
+		try {
+
+			BufferedWriter f_writer = new BufferedWriter(new FileWriter(fileName, false));
+			for (Contact c : contacts.values()) {
+				f_writer.write(String.join(",", c.firstName, c.lastName, c.address, c.city, c.state, c.zip,
+						c.phoneNumber, c.eMail));
+				f_writer.write("\n");
+			}
+			f_writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 }
