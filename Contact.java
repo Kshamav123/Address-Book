@@ -42,9 +42,3 @@ public class Contact {
 	}
 
 }
-
-
-
-	
-
-
