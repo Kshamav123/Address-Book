@@ -1,12 +1,12 @@
 package com.AddressBook;
 
 import java.util.Collection;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
@@ -14,11 +14,20 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.CSVWriter;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+
+
 
 public class AddressBook {
 	String addressBookName;
@@ -209,11 +218,12 @@ public class AddressBook {
 	}
 
 	/**
-	 * @param to search the place entered
-	 * @return the number of contacts
+	 * @param place=place user interested in
+	 * @return the number of contacts who are living in that place
 	 */
 	public int searchCity(String place) {
 
+		// Map<String, Contact> statesMap = new HashMap<>();
 		Map<String, Contact> cityMap = new HashMap<>();
 
 		Set<Map.Entry<String, Contact>> entries = contacts.entrySet();
@@ -241,12 +251,13 @@ public class AddressBook {
 	}
 
 	/**
-	 * @param to search the place entered
-	 * @return the number of contacts 
+	 * @param place=state user interested in
+	 * @return the number of contacts who are living in that state
 	 */
 	public int searchState(String place) {
 
 		Map<String, Contact> statesMap = new HashMap<>();
+		// Map<String, Contact> cityMap = new HashMap<>();
 
 		Set<Map.Entry<String, Contact>> entries = contacts.entrySet();
 		Stream<Map.Entry<String, Contact>> entriesStream = entries.stream();
@@ -287,7 +298,7 @@ public class AddressBook {
 
 			System.out.println(entry.getValue());
 		}
-		System.out.println();
+		System.out.println("");
 	}
 
 	/**
@@ -304,7 +315,7 @@ public class AddressBook {
 		Stream<String> keysStream = keySet.stream();
 
 		valuesStream.sorted((p1, p2) -> p1.zip.compareTo(p2.zip)).forEach(System.out::println);
-		System.out.println();
+		System.out.println("");
 	}
 
 	/**
@@ -321,7 +332,7 @@ public class AddressBook {
 		Stream<String> keysStream = keySet.stream();
 
 		valuesStream.sorted((p1, p2) -> p1.city.compareTo(p2.city)).forEach(System.out::println);
-		System.out.println();
+		System.out.println("");
 	}
 
 	/**
@@ -338,7 +349,7 @@ public class AddressBook {
 		Stream<String> keysStream = keySet.stream();
 
 		valuesStream.sorted((p1, p2) -> p1.state.compareTo(p2.state)).forEach(System.out::println);
-		System.out.println();
+		System.out.println("");
 	}
 
 	/**
@@ -346,11 +357,11 @@ public class AddressBook {
 	 */
 	public void addContactFile(BufferedReader br) {
 		Contact contact;
-		String line;
+		String row;
 
 		try {
-			while ((line = br.readLine()) != null) {
-				String[] data = line.split(",");
+			while ((row = br.readLine()) != null) {
+				String[] data = row.split(",");
 				contact = new Contact(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]);
 				String name = data[0] + " " + data[1];
 				Contact c = contacts.get(name);
@@ -373,6 +384,7 @@ public class AddressBook {
 		try {
 
 			BufferedWriter f_writer = new BufferedWriter(new FileWriter(fileName, false));
+
 			for (Contact c : contacts.values()) {
 				f_writer.write(String.join(",", c.firstName, c.lastName, c.address, c.city, c.state, c.zip,
 						c.phoneNumber, c.eMail));
@@ -384,4 +396,71 @@ public class AddressBook {
 		}
 
 	}
-}
+
+	/**
+	 * @param file=csv file path Reads the contact from csv file and adds to
+	 *                 dictionary
+	 */
+	public void addContactCsv(String file) {
+		try {
+
+			// Create an object of filereader class
+			// with CSV file as a parameter.
+			FileReader filereader = new FileReader(file);
+
+			// create csvReader object
+			// and skip first Line
+			CSVReader csvReader = new CSVReaderBuilder(filereader).withSkipLines(1).build();
+			List<String[]> allData = csvReader.readAll();
+			Contact contact;
+
+			// print Data
+			for (String[] row : allData) {
+				contact = new Contact(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]);
+				String name = row[0] + " " + row[1];
+				Contact c = contacts.get(name);
+
+				if (c == null) {
+					contacts.put(name, contact);
+				}
+			}
+
+			System.out.println();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * @param filePath=path to csv file Writes the contacts in dictionary to csv
+	 *                      
+	 */
+	public void writeContactCsv(String filePath) {
+		File file = new File(filePath);
+		try {
+			// create FileWriter object with file as parameter
+			FileWriter outputfile = new FileWriter(file);
+
+			// create CSVWriter object filewriter object as parameter
+			CSVWriter writer = new CSVWriter(outputfile, ',', CSVWriter.NO_QUOTE_CHARACTER,
+					CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+			// adding header to csv
+			String[] header = { "FistName", "Lastname", "Address", "City", "State", "Zip", "Phone Number", "Email" };
+			writer.writeNext(header);
+
+			for (Contact c : contacts.values()) {
+				String[] data1 = { c.firstName, c.lastName, c.address, c.city, c.state, c.zip, c.phoneNumber, c.eMail };
+				writer.writeNext(data1);
+			}
+
+			// closing writer connection
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	}
