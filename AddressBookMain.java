@@ -2,6 +2,7 @@ package com.AddressBook;
 
 import java.util.List;
 
+
 import java.util.Map;
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,7 +23,7 @@ public class AddressBookMain {
 	public static void main(String[] args) {
 		System.out.println("Welcome to AddressBook program");
 
-		final int EXIT = 11;
+		final int EXIT = 15;
 
 		int choice = 0;
 
@@ -30,8 +31,8 @@ public class AddressBookMain {
 
 			System.out.println(
 					"1 : Add AddressBook\n2 : Add Contact\n3 : Edit Contact\n4 : Delete Contact\n5 : Display Contact\n6 :"
-							+ " Search by place\n7 :Sort by name\n8 :Sort by place\n9 Read from File\n10 Write to File"
-							+ EXIT + " : to exit");
+							+ " Search by place\n7 :Sort by name\n8 :Sort by place\n9 Read from File\n10 Write to File\n"
+							+ "11 Read from csv\n12Write to csv" + EXIT + " : to exit");
 			Scanner r = new Scanner(System.in);
 			Scanner sc = new Scanner(System.in);
 			choice = r.nextInt();
@@ -69,6 +70,12 @@ public class AddressBookMain {
 			case 10:
 				writeToFile();
 				break;
+			case 11:
+				readFromcsv();
+				break;
+			case 12:
+				writeTocsv();
+				break;
 
 			case EXIT:
 				System.exit(0);
@@ -80,6 +87,42 @@ public class AddressBookMain {
 	}
 
 	/**
+	 *  Writes the addressbook to csv file
+	 */
+	private static void writeTocsv() {
+		String basePath = "/Users/kshamavidyananda/eclipse-workspace/Address-Book/data";
+		Scanner m = new Scanner(System.in);
+		System.out.println("Enter the address book you wanna write");
+		String fileName = m.next();
+		AddressBook Book = addressBook.get(fileName);
+		if (Book == null) {
+			System.out.println("No book found");
+			return;
+
+		}
+		addressBook.get(fileName).writeContactCsv(basePath + "/" + fileName + ".csv");
+	}
+
+	/**
+	 *  Reads the addressbook from csv file
+	 */
+	private static void readFromcsv() {
+		String basePath = "/Users/kshamavidyananda/eclipse-workspace/Address-Book/data";
+		Scanner m = new Scanner(System.in);
+		System.out.println("Enter the address book you wanna read");
+		String filename = m.next();
+		File file = new File(basePath + "/" + filename + ".csv");
+		if (!file.exists()) {
+			System.out.println("Address book not found");
+			return;
+		}
+		System.out.println("Reading completed");
+		AddressBook adBook = new AddressBook(filename);
+		addressBook.put(filename, adBook);
+		adBook.addContactCsv(basePath + "/" + filename + ".csv");
+	}
+
+	/**
 	 * Writes the contact in addressbook to file
 	 */
 	private static void writeToFile() {
@@ -87,14 +130,14 @@ public class AddressBookMain {
 		Scanner m = new Scanner(System.in);
 		System.out.println("Enter the address book you wanna write");
 		String fileName = m.next();
-		AddressBook book = addressBook.get(fileName);
-		if (book == null) {
+		AddressBook Book = addressBook.get(fileName);
+		if (Book == null) {
 			System.out.println("No book found");
 			return;
 
 		}
 		addressBook.get(fileName).writeContact(basePath + "/" + fileName);
-        System.out.println("Writing complted");
+
 	}
 
 	/**
@@ -103,7 +146,7 @@ public class AddressBookMain {
 	private static void readFile() {
 		String basePath = "/Users/kshamavidyananda/eclipse-workspace/Address-Book/data";
 		Scanner m = new Scanner(System.in);
-		System.out.println("Enter the address book you want to read");
+		System.out.println("Enter the address book you wanna read");
 		String filename = m.next();
 		File file = new File(basePath + "/" + filename);
 		if (!file.exists()) {
@@ -116,7 +159,6 @@ public class AddressBookMain {
 			AddressBook adBook = new AddressBook(filename);
 			addressBook.put(filename, adBook);
 			adBook.addContactFile(br);
-			System.out.println("Reading completed");
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -204,9 +246,8 @@ public class AddressBookMain {
 	 * Deletes the contact from the addressbook
 	 */
 	private static void deleteContact() {
-		System.out.println("Enter the name of address book from which you want to delete");
+		System.out.println("Enter the name of address book from which you wanna delete");
 
-		// Scanner r =new Scanner(System.in);
 		String bookName = r.nextLine();
 		AddressBook adBook = addressBook.get(bookName);
 		if (adBook != null) {
@@ -222,8 +263,9 @@ public class AddressBookMain {
 	 * Edits the details of person in particular addressbook
 	 */
 	private static void editContact() {
-		System.out.println("Enter the name of address book to which you want to edit");
+		System.out.println("Enter the name of address book to which you wanna edit");
 
+		// Scanner r =new Scanner(System.in);
 		String bookName = r.nextLine();
 		AddressBook adBook = addressBook.get(bookName);
 		if (adBook != null) {
@@ -257,12 +299,11 @@ public class AddressBookMain {
 	 * Displays the chosen addressbook
 	 */
 	private static void displayContact() {
-		System.out.println("Enter the name of address book whose contacts you want to display");
+		System.out.println("Enter the name of address book whose contacts you wanna display");
 
 		String bookName = r.nextLine();
 		AddressBook adBook = addressBook.get(bookName);
 
-		// System.out.println(adBook);
 		if (adBook != null) {
 			adBook.print();
 		} else {
@@ -276,7 +317,7 @@ public class AddressBookMain {
 	 */
 	private static void addContact() {
 
-		System.out.println("Enter the name of Address book to which you want to add the contact");
+		System.out.println("Enter the name of Address book to which you wanna a add the contact");
 		String adBook = r.nextLine();
 		AddressBook Book = addressBook.get(adBook);
 		if (Book == null) {
