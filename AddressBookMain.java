@@ -103,7 +103,7 @@ public class AddressBookMain {
 	private static void readFile() {
 		String basePath = "/Users/kshamavidyananda/eclipse-workspace/Address-Book/data";
 		Scanner m = new Scanner(System.in);
-		System.out.println("Enter the address book you wanna read");
+		System.out.println("Enter the address book you want to read");
 		String filename = m.next();
 		File file = new File(basePath + "/" + filename);
 		if (!file.exists()) {
@@ -204,7 +204,7 @@ public class AddressBookMain {
 	 * Deletes the contact from the addressbook
 	 */
 	private static void deleteContact() {
-		System.out.println("Enter the name of address book from which you wanna delete");
+		System.out.println("Enter the name of address book from which you want to delete");
 
 		// Scanner r =new Scanner(System.in);
 		String bookName = r.nextLine();
@@ -222,7 +222,7 @@ public class AddressBookMain {
 	 * Edits the details of person in particular addressbook
 	 */
 	private static void editContact() {
-		System.out.println("Enter the name of address book to which you wanna edit");
+		System.out.println("Enter the name of address book to which you want to edit");
 
 		String bookName = r.nextLine();
 		AddressBook adBook = addressBook.get(bookName);
@@ -257,7 +257,7 @@ public class AddressBookMain {
 	 * Displays the chosen addressbook
 	 */
 	private static void displayContact() {
-		System.out.println("Enter the name of address book whose contacts you wanna display");
+		System.out.println("Enter the name of address book whose contacts you want to display");
 
 		String bookName = r.nextLine();
 		AddressBook adBook = addressBook.get(bookName);
@@ -276,7 +276,7 @@ public class AddressBookMain {
 	 */
 	private static void addContact() {
 
-		System.out.println("Enter the name of Address book to which you wanna a add the contact");
+		System.out.println("Enter the name of Address book to which you want to add the contact");
 		String adBook = r.nextLine();
 		AddressBook Book = addressBook.get(adBook);
 		if (Book == null) {
