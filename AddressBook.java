@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.google.gson.Gson;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
@@ -26,8 +27,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
-
-
 
 public class AddressBook {
 	String addressBookName;
@@ -80,7 +79,6 @@ public class AddressBook {
 		String address = sc.nextLine();
 		System.out.println("enter the city");
 		String city = sc.nextLine();
-
 		System.out.println("enter the state");
 		String state = sc.nextLine();
 		System.out.println("enter the zip code");
@@ -123,22 +121,21 @@ public class AddressBook {
 
 		Contact c = contacts.get(name);
 		if (c == null) {
-			System.out.println("Person of that name not exits in this book");
+			System.out.println("Person of that name does not exit in this book");
 		} else {
 			int choice;
 
 			Scanner r = new Scanner(System.in);
 
 			while (true) {
-				System.out.println("What do you wanna edit");
+				System.out.println("What do you want to edit");
 				System.out.println(
-						"1 First Name\n2 Last Name\n3 Address\n4 City\n5 State\n6Zip\n7 Phone number\n8Email\n9Go back");
+						"1 First Name\n2 Last Name\n3 Address\n4 City\n5 State\n6Z ip\n7 Phone number\n8 Email\n9 Go back");
 				choice = r.nextInt();
 				switch (choice) {
 				case 1:
 					System.out.println("enter the first name");
 					String firstName = sc.nextLine();
-					// person.firstName = firstName;
 					c.firstName = firstName;
 					break;
 				case 2:
@@ -199,7 +196,7 @@ public class AddressBook {
 
 		Contact c = contacts.get(name);
 		if (c == null) {
-			System.out.println("Person of that name not exits in this book");
+			System.out.println("Person of that name does not exits in this book");
 
 		} else {
 			contacts.remove(name);
@@ -208,7 +205,7 @@ public class AddressBook {
 	}
 
 	/**
-	 * Prints the contacts
+	 * It Print the contacts
 	 */
 	public void print() {
 
@@ -223,7 +220,6 @@ public class AddressBook {
 	 */
 	public int searchCity(String place) {
 
-		// Map<String, Contact> statesMap = new HashMap<>();
 		Map<String, Contact> cityMap = new HashMap<>();
 
 		Set<Map.Entry<String, Contact>> entries = contacts.entrySet();
@@ -251,13 +247,13 @@ public class AddressBook {
 	}
 
 	/**
-	 * @param place=state user interested in
-	 * @return the number of contacts who are living in that state
+	 * Search the state 
+	 * @param place state that we wanted to be searched
+	 * @return the number of contacts 
 	 */
 	public int searchState(String place) {
 
 		Map<String, Contact> statesMap = new HashMap<>();
-		// Map<String, Contact> cityMap = new HashMap<>();
 
 		Set<Map.Entry<String, Contact>> entries = contacts.entrySet();
 		Stream<Map.Entry<String, Contact>> entriesStream = entries.stream();
@@ -353,8 +349,9 @@ public class AddressBook {
 	}
 
 	/**
-	 * Adds the contacts stored in a file to contacts
+	 * Adding the contact to file
 	 */
+
 	public void addContactFile(BufferedReader br) {
 		Contact contact;
 		String row;
@@ -377,7 +374,9 @@ public class AddressBook {
 	}
 
 	/**
-	 * writes the contacts in addressbook to file
+	 * Writing the contact of addressbook to a file
+	 * 
+	 * @param fileName file that is entered
 	 */
 	public void writeContact(String fileName) {
 
@@ -398,8 +397,9 @@ public class AddressBook {
 	}
 
 	/**
-	 * @param file=csv file path Reads the contact from csv file and adds to
-	 *                 dictionary
+	 * Adding contact to csv file
+	 * 
+	 * @param file
 	 */
 	public void addContactCsv(String file) {
 		try {
@@ -435,7 +435,7 @@ public class AddressBook {
 
 	/**
 	 * @param filePath=path to csv file Writes the contacts in dictionary to csv
-	 *                      
+	 *                      file
 	 */
 	public void writeContactCsv(String filePath) {
 		File file = new File(filePath);
@@ -463,4 +463,45 @@ public class AddressBook {
 
 	}
 
+	/**
+	 * @param file=json file path Writes the contacts to json file
+	 */
+	public void writeContactJson(String file) {
+		Gson gson = new Gson();
+		try {
+			FileWriter writer = new FileWriter(file);
+			for (Contact c : contacts.values()) {
+				String json = gson.toJson(c);
+
+				writer.write(json);
+				writer.write("\n");
+
+			}
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
+
+	/**
+	 * @param file=json file path Reads the contacts from json file
+	 */
+	public void addContactJson(String file) {
+		Gson gson = new Gson();
+		try {
+			System.out.println("Reading JSON from a file");
+			System.out.println("----------------------------");
+
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			Contact contactObj = gson.fromJson(br, Contact.class);
+			Contact c = contacts.get(contactObj.firstName + contactObj.lastName);
+			if (c == null) {
+				contacts.put(contactObj.firstName + contactObj.lastName, contactObj);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}
